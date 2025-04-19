@@ -1,249 +1,189 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
 import axios from "axios";
-const data = {
-  abstract:
-    "The lawsuit accuses President Trump of vastly overstepping his authority to “upturn the electoral playing field in his favor and against his political rivals.”",
-  web_url:
-    "https://www.nytimes.com/2025/03/31/us/politics/trump-executive-order-elections-lawsuit.html",
-  snippet:
-    "The lawsuit accuses President Trump of vastly overstepping his authority to “upturn the electoral playing field in his favor and against his political rivals.”",
-  lead_paragraph:
-    "Nearly every arm of the Democratic Party united in filing a lawsuit against the Trump administration on Monday night, arguing that a recent executive order signed by the president seeking to require documentary proof of citizenship and other voting reforms is unconstitutional.",
-  source: "The New York Times",
-  multimedia: [
-    {
-      rank: 0,
-      subtype: "xlarge",
-      caption: null,
-      credit: null,
-      type: "image",
-      url: "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-articleLarge.jpg",
-      height: 400,
-      width: 600,
-      subType: "xlarge",
-      crop_name: "articleLarge",
-      legacy: {
-        xlarge:
-          "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-articleLarge.jpg",
-        xlargewidth: 600,
-        xlargeheight: 400,
-      },
-    },
-    {
-      rank: 0,
-      subtype: "jumbo",
-      caption: null,
-      credit: null,
-      type: "image",
-      url: "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-jumbo.jpg",
-      height: 683,
-      width: 1024,
-      subType: "jumbo",
-      crop_name: "jumbo",
-      legacy: {},
-    },
-    {
-      rank: 0,
-      subtype: "superJumbo",
-      caption: null,
-      credit: null,
-      type: "image",
-      url: "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-superJumbo.jpg",
-      height: 1366,
-      width: 2048,
-      subType: "superJumbo",
-      crop_name: "superJumbo",
-      legacy: {},
-    },
-    {
-      rank: 0,
-      subtype: "thumbnail",
-      caption: null,
-      credit: null,
-      type: "image",
-      url: "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-thumbStandard.jpg",
-      height: 75,
-      width: 75,
-      subType: "thumbnail",
-      crop_name: "thumbStandard",
-      legacy: {
-        thumbnail:
-          "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-thumbStandard.jpg",
-        thumbnailwidth: 75,
-        thumbnailheight: 75,
-      },
-    },
-    {
-      rank: 0,
-      subtype: "thumbLarge",
-      caption: null,
-      credit: null,
-      type: "image",
-      url: "images/2025/03/31/multimedia/00pol-elex-lawsuit-topart-vlqh/00pol-elex-lawsuit-topart-vlqh-thumbLarge.jpg",
-      height: 150,
-      width: 150,
-      subType: "thumbLarge",
-      crop_name: "thumbLarge",
-      legacy: {},
-    },
-  ],
-  headline: {
-    main: "Democrats Sue President Over Executive Order on Elections",
-    kicker: null,
-    content_kicker: null,
-    print_headline: "",
-    name: null,
-    seo: null,
-    sub: null,
-  },
-  keywords: [
-    {
-      name: "organizations",
-      value: "Democratic National Committee",
-      rank: 1,
-      major: "N",
-    },
-    {
-      name: "organizations",
-      value: "Democratic Party",
-      rank: 2,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "United States Politics and Government",
-      rank: 3,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "Federal-State Relations (US)",
-      rank: 4,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "Voting Rights, Registration and Requirements",
-      rank: 5,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "Suits and Litigation (Civil)",
-      rank: 6,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "Presidential Power (US)",
-      rank: 7,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "Executive Orders and Memorandums",
-      rank: 8,
-      major: "N",
-    },
-    {
-      name: "subject",
-      value: "Constitution (US)",
-      rank: 9,
-      major: "N",
-    },
-    {
-      name: "persons",
-      value: "Trump, Donald J",
-      rank: 10,
-      major: "N",
-    },
-    {
-      name: "persons",
-      value: "Schumer, Charles E",
-      rank: 11,
-      major: "N",
-    },
-    {
-      name: "persons",
-      value: "Jeffries, Hakeem",
-      rank: 12,
-      major: "N",
-    },
-  ],
-  pub_date: "2025-04-01T00:40:09+0000",
-  document_type: "article",
-  news_desk: "Politics",
-  section_name: "U.S.",
-  subsection_name: "Politics",
-  byline: {
-    original: "By Nick Corasaniti",
-    person: [
-      {
-        firstname: "Nick",
-        middlename: null,
-        lastname: "Corasaniti",
-        qualifier: null,
-        title: null,
-        role: "reported",
-        organization: "",
-        rank: 1,
-      },
-    ],
-    organization: null,
-  },
-  type_of_material: "News",
-  _id: "nyt://article/46c671f3-09ab-55b7-80e2-f1620110d42c",
-  word_count: 870,
-  uri: "nyt://article/46c671f3-09ab-55b7-80e2-f1620110d42c",
-};
-
-const nyTimesApiKey = import.meta.env.VITE_NY_TIMES_API_KEY;
-
-// const fetchArticles = async () => {
-//   const response = await axios.get("http://localhost:3000/api/articles");
-
-//   return response.data;
-// };
+import { useState, useEffect } from "react";
+import "./App.css";
+import ArticleCard from "./components/ArticleCard";
+import FilterBar from "./components/FilterBar";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [activeSection, setActiveSection] = useState("All");
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const postData = async () => {
+  // Filter articles based on section
+  const filteredArticles =
+    activeSection === "All"
+      ? articles
+      : articles.filter((article) => article.section_name === activeSection);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:3000/api/articles");
+
+        // Adjust this based on your actual API response structure.
+        const articlesData = response.data || [];
+
+        setArticles(articlesData);
+        setError(null);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        setError("Failed to load articles. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/articles",
-        data
-      );
-      console.log(response.data);
+      setLoading(true);
+      // You would typically send the search query to your backend
+      // For this example, we'll simulate a search by filtering the existing articles
+      // In a real app, you'd make an API call like:
+      // const response = await axios.get(`http://localhost:3000/api/search?q=${searchQuery}`);
+
+      // For now, we'll just update the UI to reflect that a search was performed
+      setActiveSection("All"); // Reset to All sections when searching
+
+      // Simulate a search delay
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
     } catch (error) {
-      console.error("Error posting data:", error);
+      console.error("Error searching articles:", error);
+      setError("Failed to search articles. Please try again later.");
+      setLoading(false);
     }
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await fetchArticles();
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.error("Error fetching articles:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   return (
-    <div>
-      <button
-        onClick={() => {
-          postData();
-        }}
-      >
-        Post Data
-      </button>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <div className="flex items-center mb-4 sm:mb-0">
+              <h1 className="text-3xl font-serif font-bold text-gray-900">
+                QueryPress
+              </h1>
+              <span className="ml-2 text-sm bg-yellow-100 text-yellow-800 py-1 px-2 rounded">
+                Beta
+              </span>
+            </div>
+
+            <div className="text-gray-600 text-sm">
+              {new Date().toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search Bar */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <form onSubmit={handleSearch} className="w-full">
+            <div className="relative">
+              <input
+                type="text"
+                className="w-full bg-white border border-gray-300 rounded-full py-4 px-6 pr-12 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                placeholder="Search for articles or ask questions in natural language..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p className="text-sm text-gray-500 mt-2 text-center">
+              Try "Show me articles about climate change" or "Find tech news
+              from last week"
+            </p>
+          </form>
+        </div>
+
+        {/* Filter Bar */}
+        <div className="mb-8">
+          <FilterBar
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
+        </div>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <p className="text-gray-500">Loading articles...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-red-500">{error}</p>
+          </div>
+        )}
+
+        {/* Articles Grid - Now consistently showing 3 columns */}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredArticles.length > 0 ? (
+              filteredArticles.map((article, index) => (
+                <ArticleCard key={index} article={article} />
+              ))
+            ) : (
+              <div className="col-span-3 text-center py-12">
+                <p className="text-gray-500">
+                  No articles found for this section.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-sm text-gray-400">
+              This is a demo application showcasing NY Times articles.
+            </p>
+            <p className="text-sm text-gray-400 mt-2">
+              All article content is property of The New York Times.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
