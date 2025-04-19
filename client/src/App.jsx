@@ -1,12 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import axios from "axios";
 
-const nyTimesApiKey = import.meta.env.VITE_NY_TIMES_API_KEY
+const nyTimesApiKey = import.meta.env.VITE_NY_TIMES_API_KEY;
+
+const fetchArticles = async () => {
+  const response = await axios.get("http://localhost:3000/api/articles");
+
+  return response.data;
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchArticles();
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -31,7 +50,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
